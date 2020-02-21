@@ -1,0 +1,2 @@
+# mvc_designpatterns
+MVC, JAVA, COMPOSITE, OBSERVER, STRATEGY
