@@ -2,6 +2,8 @@ package br.com.pompeo.imposto.model;
 
 import java.util.Observable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import br.com.pompeo.imposto.util.AliquotaSingleton;
 
 //O model é um Observable
@@ -10,6 +12,11 @@ import br.com.pompeo.imposto.util.AliquotaSingleton;
 
 public class Pis extends Observable implements Imposto {
 
+	//LogManager retorna uma instancia de Logger, passando o nome
+	//da classe que será loigada como parametro
+	private static final Logger LOGGER = LogManager.getLogger(Pis.class.getName());
+	
+	
 	//Recebe do Singleton o valor da propriedade aliquotaPis
 	final float ALIQUOTA = Float.parseFloat(AliquotaSingleton.getInstance().getProperty("aliquotaPis"));
 	float valorDoPis = 0;
@@ -28,6 +35,12 @@ public class Pis extends Observable implements Imposto {
 	
 	public void calcularImposto(float valor) {
 		valorDoPis = valor * ALIQUOTA;
+		
+		//Grava o log, conforme parametrizado
+		LOGGER.info("Valor: " + valor
+				+ " Alíquota: " + ALIQUOTA
+				+ "Valor do Pis: " + valorDoPis);
+				
 		//setChanged Altera o estado interno do objeto
 		//para true, foi houve uma alteracao no estado do valorPis
 		setChanged();
